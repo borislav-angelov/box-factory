@@ -112,9 +112,11 @@ class BoxClient {
 		$api->setAccessToken($this->accessToken);
 		$api->setBaseURL(self::API_URL);
 		$api->setOption(CURLOPT_FILE, $outStream);
+		$api->setOption(CURLOPT_FOLLOWLOCATION, true);
 		$api->setPath("/files/$id/content");
 
 		return $api->makeRequest();
 	}
+
 
 }
