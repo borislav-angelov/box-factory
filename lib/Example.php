@@ -4,10 +4,12 @@ header('Content-type: text/html; charset=utf-8');
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'BoxClient.php';
 
-$client = new BoxClient('0OY6z72xe7tBx18ai1mbU7lNh4xyEqgg');
+$client = new BoxClient('XFHR9xaPbNGsQ09vXdkXZelSqLfa5liU');
 
 // $drive = $client->listDrive();
 
 // print_r(json_encode($drive));
 
-$client->deleteFile(48666622353);
+$data = $client->uploadFile('C:\wamp\www\wordpress\wp-content\box-factory\lib\uploader.txt', 0);
+
+print_r(json_encode($data));

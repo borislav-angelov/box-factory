@@ -29,6 +29,8 @@ class BoxClient {
 
 	const API_URL             	= 'https://api.box.com/2.0';
 
+	const UPLOAD_URL 			= 'https://upload.box.com/api/2.0';
+
 	protected $accessToken = null;
 
 	protected $ssl = null;
@@ -68,9 +70,9 @@ class BoxClient {
 		$api->setOption(CURLOPT_POSTFIELDS, json_encode(array(
 			'name' => $name,
 			'parent' => (object) array(
-				'id' => 0
-				)
-			)));
+				'id' => 0,
+			),
+		)));
 
 		return $api->makeRequest();
 	}
@@ -116,6 +118,27 @@ class BoxClient {
 		$api->setPath("/files/$id/content");
 
 		return $api->makeRequest();
+	}
+
+	public function uploadFile($pathname, $parentId) {
+		$api = new BoxCurl;
+		$api->setAccessToken($this->accessToken);
+		$api->setBaseURL(self::UPLOAD_URL);
+		$api->setPath('/files/content');
+		$api->setOption(CURLOPT_POST, true);
+		$api->setOption(CURLOPT_POSTFIELDS, array(
+			'attributes' => json_encode(
+				array(
+					'name' => basename($pathname),
+					'parent' => array(
+						'id' => "$parentId",
+					)
+				)
+			),
+			'file' => "@{$pathname}",
+		));
+
+		return @$api->makeRequest();
 	}
 
 

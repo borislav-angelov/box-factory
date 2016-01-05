@@ -47,6 +47,7 @@ class BoxCurl {
 		$this->setOption(CURLOPT_HEADER, false);
 		$this->setOption(CURLOPT_RETURNTRANSFER, true);
 		$this->setOption(CURLOPT_CONNECTTIMEOUT, 30);
+		$this->setOption(CURLOPT_FOLLOWLOCATION, true);
 
 		// Enable SSL support
 		$this->setOption(CURLOPT_SSL_VERIFYHOST, 2);
@@ -196,6 +197,10 @@ class BoxCurl {
 		// cURL handler
 		$this->handler = curl_init($this->getBaseURL() . $this->getPath());
 
+		$url = $this->getBaseURL() . $this->getPath();
+
+		print_r($url);
+
 		// Apply cURL headers
 		$httpHeaders = array();
 		foreach ($this->headers as $name => $value) {
@@ -215,6 +220,8 @@ class BoxCurl {
 
 		// HTTP request
 		$response = curl_exec($this->handler);
+
+		print_r($response);
 		if ($response === false) {
 			throw new Exception('Error executing HTTP request: ' . curl_error($this->handler));
 		}
