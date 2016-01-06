@@ -124,14 +124,14 @@ class BoxClient {
 		$api = new BoxCurl;
 		$api->setAccessToken($this->accessToken);
 		$api->setBaseURL(self::UPLOAD_URL);
-		$api->setPath('/files/content');
 		$api->setOption(CURLOPT_POST, true);
+		$api->setPath("/files/content");
 		$api->setOption(CURLOPT_POSTFIELDS, array(
 			'attributes' => json_encode(
 				array(
 					'name' => basename($pathname),
 					'parent' => array(
-						'id' => "$parentId",
+						'id' => $parentId,
 					)
 				)
 			),

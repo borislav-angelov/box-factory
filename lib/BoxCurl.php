@@ -197,10 +197,6 @@ class BoxCurl {
 		// cURL handler
 		$this->handler = curl_init($this->getBaseURL() . $this->getPath());
 
-		$url = $this->getBaseURL() . $this->getPath();
-
-		print_r($url);
-
 		// Apply cURL headers
 		$httpHeaders = array();
 		foreach ($this->headers as $name => $value) {
@@ -220,8 +216,6 @@ class BoxCurl {
 
 		// HTTP request
 		$response = curl_exec($this->handler);
-
-		print_r($response);
 		if ($response === false) {
 			throw new Exception('Error executing HTTP request: ' . curl_error($this->handler));
 		}
